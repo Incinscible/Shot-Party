@@ -1,11 +1,11 @@
-var comptage = 0; //variable qui indique la position de l'obstacle dans le tableau 'coordonnes_obstacle' lors du premier démarrage
+var comptage = 0; //variable qui indique la position de l'obstacle dans le tableau 'coordonnes_obstacle' lors du premier dÃ©marrage
 
-var multiplicateur = 1; //redimensionnement des objets en fonction de la taille de l'écran
+var multiplicateur = 1; //redimensionnement des objets en fonction de la taille de l'Ã©cran
 
 var xapparitionjoueur = [2*30*multiplicateur, 30*26*multiplicateur];
 var yapparitionjoueur = [30*multiplicateur, 30*18*multiplicateur];
 
-var position_carte = 25; // position X et Y du coin supérieur gauche de la carte
+var position_carte = 25; // position X et Y du coin supÃ©rieur gauche de la carte
 var x_joueur = 0*30*multiplicateur+position_carte;
 var y_joueur = 0*30*multiplicateur+position_carte;
 var x_joueur2 = 25*30*multiplicateur;
@@ -16,15 +16,15 @@ var y_joueur2 = 17*30*multiplicateur;
 var angle = (Math.PI/4); // A COMPLETER
 var angleJ2 = (Math.PI/4); // A COMPLETER
 var vittesse_joueur = multiplicateur; // vitesse des joueurs --> x pixels/tick
-var tirer = [false,false]; //si la balle doit être tirée ou non
+var tirer = [false,false]; //si la balle doit Ãªtre tirÃ©e ou non
 var x_balle = []; // position X de la balle
 var y_balle = []; // position Y de la balle
 var x_balle2 = []; // position X de la balle
 var y_balle2 = []; // position Y de la balle
 var angle_balle = []; 
-var temps_balle = [0,0]; // durée de l'apparition de la balle
-var X=1; // TIMOTHÉE ELLE VEUT RIEN DIRE CETTE VARIABLE
-var X2=1; // TIMOTHÉE ELLE VEUT RIEN DIRE CETTE VARIABLE
+var temps_balle = [0,0]; // durÃ©e de l'apparition de la balle
+var X=1; // TIMOTHÃ‰E ELLE VEUT RIEN DIRE CETTE VARIABLE
+var X2=1; // TIMOTHÃ‰E ELLE VEUT RIEN DIRE CETTE VARIABLE
 var distance_balle_joueur = [];
 var vie_personnage = [5,5];
 
@@ -34,7 +34,7 @@ var vie_personnage = [5,5];
 //var deplacementHaut=1;
 //var deplacementBas=1;
 
-//var deplacementX = 0; // 0 : rien ; 1 : aller à droite ; 2 : aller à gauche
+//var deplacementX = 0; // 0 : rien ; 1 : aller Ã  droite ; 2 : aller Ã  gauche
 //var deplacementY = 2; // 0 : rien ; 1 : aller en haut ; 2 : aller en bas
 
 //var rect1 = {x: 300, y: 910, width: 19, height: 9}
@@ -53,7 +53,7 @@ var initialisationCarteAZero = true;
 
 
 
-// Définition de l'objet Person via un constructeur
+// DÃ©finition de l'objet Person via un constructeur
 function objetRobots(equipe, positionXRobotTableau, positionYRobotTableau, positionXRobot, positionYRobot, caseHautRobot, caseDroiteRobot, caseBasRobot, caseGaucheRobot, deplacementRobotHaut, deplacementRobotDroite, deplacementRobotBas, deplacementRobotGauche, cible, timer, timerCible) {
     this.equipe = equipe;
     this.positionXRobotTableau = positionXRobotTableau;
@@ -73,7 +73,7 @@ function objetRobots(equipe, positionXRobotTableau, positionYRobotTableau, posit
 	this.timerCible = timerCible;
 }
 
-// On crée des variables qui vont contenir une instance de l'objet Person :
+// On crÃ©e des variables qui vont contenir une instance de l'objet Person :
 var robot1 = new objetRobots(1, 0, 8, 0*30*multiplicateur+25, 8*30*multiplicateur+25, true, true, true, true, false, false, false, false, Math.floor(Math.random()*7), 0, 0,[]);
 var robot2 = new objetRobots(1, 0, 17, 0*30*multiplicateur+25, 17*30*multiplicateur+25, true, true, true, true, false, false, false, false, Math.floor(Math.random()*7), 0, 0,[]);
 var robot3 = new objetRobots(2, 24, 9, 24*30*multiplicateur+25, 9*30*multiplicateur+25, true, true, true, true, false, false, false, false, Math.floor(Math.random()*7), 0, 0,[]);
@@ -128,6 +128,8 @@ function preload() {
 	snip7_equipe2 = loadImage("images/snip7-equipe2.png");
 	snip8_equipe2 = loadImage("images/snip8-equipe2.png");
 	
+	murHaut = loadImage("images/murHaut.png")
+	murBas = loadImage("images/murBas.png")
 }
 
 function setup() {
@@ -216,7 +218,7 @@ function positionRobotTableau()
 		distance[0][2] = int(dist(robot4.positionXRobot, robot4.positionYRobot, robot1.positionXRobot, robot1.positionYRobot+3));
 		distance[0][3] = int(dist(robot4.positionXRobot, robot4.positionYRobot, robot1.positionXRobot-3, robot1.positionYRobot));
 	}
-	if (robot1.cible == 3) //coin supérieur gauche
+	if (robot1.cible == 3) //coin supÃ©rieur gauche
 	{
 		nombreDeplacementsRobot = 8;
 		distance[0][0] = int(dist(25, 25, robot1.positionXRobot, robot1.positionYRobot-3));
@@ -224,7 +226,7 @@ function positionRobotTableau()
 		distance[0][2] = int(dist(25, 25, robot1.positionXRobot, robot1.positionYRobot+3));
 		distance[0][3] = int(dist(25, 25, robot1.positionXRobot-3, robot1.positionYRobot));
 	}
-	if (robot1.cible == 4) //coin supérieur droite
+	if (robot1.cible == 4) //coin supÃ©rieur droite
 	{
 		nombreDeplacementsRobot = 8;
 		distance[0][0] = int(dist(24*30*multiplicateur, 25, robot1.positionXRobot, robot1.positionYRobot-3));
@@ -232,7 +234,7 @@ function positionRobotTableau()
 		distance[0][2] = int(dist(24*30*multiplicateur, 25, robot1.positionXRobot, robot1.positionYRobot+3));
 		distance[0][3] = int(dist(24*30*multiplicateur, 25, robot1.positionXRobot-3, robot1.positionYRobot));
 	}
-	if (robot1.cible == 5) //coin inférieur gauche
+	if (robot1.cible == 5) //coin infÃ©rieur gauche
 	{
 		nombreDeplacementsRobot = 8;
 		distance[0][0] = int(dist(25, 17*30*multiplicateur, robot1.positionXRobot, robot1.positionYRobot-3));
@@ -240,7 +242,7 @@ function positionRobotTableau()
 		distance[0][2] = int(dist(25, 17*30*multiplicateur, robot1.positionXRobot, robot1.positionYRobot+3));
 		distance[0][3] = int(dist(25, 17*30*multiplicateur, robot1.positionXRobot-3, robot1.positionYRobot));
 	}
-	if (robot1.cible == 6) //coin inférieur droite
+	if (robot1.cible == 6) //coin infÃ©rieur droite
 	{
 		nombreDeplacementsRobot = 8;
 		distance[0][0] = int(dist(24*30*multiplicateur, 17*30*multiplicateur, robot1.positionXRobot, robot1.positionYRobot-3));
@@ -287,7 +289,7 @@ function verificationObstacleAutourRobot()
 			robot1.caseHautRobot = false;
 		}
 
-		//verification obstacle à droite
+		//verification obstacle Ã  droite
 		if (carte[robot1.positionYRobotTableau+1][robot1.positionXRobotTableau+1+1] == 0)
 		{
 			robot1.caseDroiteRobot = true;
@@ -310,7 +312,7 @@ function verificationObstacleAutourRobot()
 			robot1.caseBasRobot = false;
 		}
 
-		//verification obstacle à gauche
+		//verification obstacle Ã  gauche
 		if (carte[robot1.positionYRobotTableau+1][robot1.positionXRobotTableau-1+1] == 0)
 		{
 			robot1.caseGaucheRobot = true;
@@ -660,7 +662,7 @@ function positionRobotTableau2()
 		distance[1][2] = int(dist(robot4.positionXRobot, robot4.positionYRobot, robot2.positionXRobot, robot2.positionYRobot+3));
 		distance[1][3] = int(dist(robot4.positionXRobot, robot4.positionYRobot, robot2.positionXRobot-3, robot2.positionYRobot));
 	}
-	if (robot2.cible == 3) //coin supérieur gauche
+	if (robot2.cible == 3) //coin supÃ©rieur gauche
 	{
 		nombreDeplacementsRobot2 = 8;
 		distance[1][0] = int(dist(25, 25, robot2.positionXRobot, robot2.positionYRobot-3));
@@ -668,7 +670,7 @@ function positionRobotTableau2()
 		distance[1][2] = int(dist(25, 25, robot2.positionXRobot, robot2.positionYRobot+3));
 		distance[1][3] = int(dist(25, 25, robot2.positionXRobot-3, robot2.positionYRobot));
 	}
-	if (robot2.cible == 4) //coin supérieur droite
+	if (robot2.cible == 4) //coin supÃ©rieur droite
 	{
 		nombreDeplacementsRobot2 = 8;
 		distance[1][0] = int(dist(24*30*multiplicateur, 25, robot2.positionXRobot, robot2.positionYRobot-3));
@@ -676,7 +678,7 @@ function positionRobotTableau2()
 		distance[1][2] = int(dist(24*30*multiplicateur, 25, robot2.positionXRobot, robot2.positionYRobot+3));
 		distance[1][3] = int(dist(24*30*multiplicateur, 25, robot2.positionXRobot-3, robot2.positionYRobot));
 	}
-	if (robot2.cible == 5) //coin inférieur gauche
+	if (robot2.cible == 5) //coin infÃ©rieur gauche
 	{
 		nombreDeplacementsRobot2 = 8;
 		distance[1][0] = int(dist(25, 17*30*multiplicateur, robot2.positionXRobot, robot2.positionYRobot-3));
@@ -684,7 +686,7 @@ function positionRobotTableau2()
 		distance[1][2] = int(dist(25, 17*30*multiplicateur, robot2.positionXRobot, robot2.positionYRobot+3));
 		distance[1][3] = int(dist(25, 17*30*multiplicateur, robot2.positionXRobot-3, robot2.positionYRobot));
 	}
-	if (robot2.cible == 6) //coin inférieur droite
+	if (robot2.cible == 6) //coin infÃ©rieur droite
 	{
 		nombreDeplacementsRobot2 = 8;
 		distance[1][0] = int(dist(24*30*multiplicateur, 17*30*multiplicateur, robot2.positionXRobot, robot2.positionYRobot-3));
@@ -729,7 +731,7 @@ function verificationObstacleAutourRobot2()
 			robot2.caseHautRobot = false;
 		}
 
-		//verification obstacle à droite
+		//verification obstacle Ã  droite
 		if (carte[robot2.positionYRobotTableau+1][robot2.positionXRobotTableau+1+1] == 0)
 		{
 			robot2.caseDroiteRobot = true;
@@ -752,7 +754,7 @@ function verificationObstacleAutourRobot2()
 			robot2.caseBasRobot = false;
 		}
 
-		//verification obstacle à gauche
+		//verification obstacle Ã  gauche
 		if (carte[robot2.positionYRobotTableau+1][robot2.positionXRobotTableau-1+1] == 0)
 		{
 			robot2.caseGaucheRobot = true;
@@ -1093,7 +1095,7 @@ function positionRobotTableau3()
 		distance[2][2] = int(dist(robot2.positionXRobot, robot2.positionYRobot, robot3.positionXRobot, robot3.positionYRobot+3));
 		distance[2][3] = int(dist(robot2.positionXRobot, robot2.positionYRobot, robot3.positionXRobot-3, robot3.positionYRobot));
 	}
-	if (robot3.cible == 3) //coin supérieur gauche
+	if (robot3.cible == 3) //coin supÃ©rieur gauche
 	{
 		nombreDeplacementsRobot3 = 8;
 		distance[2][0] = int(dist(25, 25, robot3.positionXRobot, robot3.positionYRobot-3));
@@ -1101,7 +1103,7 @@ function positionRobotTableau3()
 		distance[2][2] = int(dist(25, 25, robot3.positionXRobot, robot3.positionYRobot+3));
 		distance[2][3] = int(dist(25, 25, robot3.positionXRobot-3, robot3.positionYRobot));
 	}
-	if (robot3.cible == 4) //coin supérieur droite
+	if (robot3.cible == 4) //coin supÃ©rieur droite
 	{
 		nombreDeplacementsRobot3 = 8;
 		distance[2][0] = int(dist(24*30*multiplicateur, 25, robot3.positionXRobot, robot3.positionYRobot-3));
@@ -1109,7 +1111,7 @@ function positionRobotTableau3()
 		distance[2][2] = int(dist(24*30*multiplicateur, 25, robot3.positionXRobot, robot3.positionYRobot+3));
 		distance[2][3] = int(dist(24*30*multiplicateur, 25, robot3.positionXRobot-3, robot3.positionYRobot));
 	}
-	if (robot3.cible == 5) //coin inférieur gauche
+	if (robot3.cible == 5) //coin infÃ©rieur gauche
 	{
 		nombreDeplacementsRobot3 = 8;
 		distance[2][0] = int(dist(25, 17*30*multiplicateur, robot3.positionXRobot, robot3.positionYRobot-3));
@@ -1117,7 +1119,7 @@ function positionRobotTableau3()
 		distance[2][2] = int(dist(25, 17*30*multiplicateur, robot3.positionXRobot, robot3.positionYRobot+3));
 		distance[2][3] = int(dist(25, 17*30*multiplicateur, robot3.positionXRobot-3, robot3.positionYRobot));
 	}
-	if (robot3.cible == 6) //coin inférieur droite
+	if (robot3.cible == 6) //coin infÃ©rieur droite
 	{
 		nombreDeplacementsRobot3 = 8;
 		distance[2][0] = int(dist(24*30*multiplicateur, 17*30*multiplicateur, robot3.positionXRobot, robot3.positionYRobot-3));
@@ -1163,7 +1165,7 @@ function verificationObstacleAutourRobot3()
 			robot3.caseHautRobot = false;
 		}
 
-		//verification obstacle à droite
+		//verification obstacle Ã  droite
 		if (carte[robot3.positionYRobotTableau+1][robot3.positionXRobotTableau+1+1] == 0)
 		{
 			robot3.caseDroiteRobot = true;
@@ -1186,7 +1188,7 @@ function verificationObstacleAutourRobot3()
 			robot3.caseBasRobot = false;
 		}
 
-		//verification obstacle à gauche
+		//verification obstacle Ã  gauche
 		if (carte[robot3.positionYRobotTableau+1][robot3.positionXRobotTableau-1+1] == 0)
 		{
 			robot3.caseGaucheRobot = true;
@@ -1533,7 +1535,7 @@ function positionRobotTableau4()
 		distance[3][2] = int(dist(robot2.positionXRobot, robot2.positionYRobot, robot4.positionXRobot, robot4.positionYRobot+3));
 		distance[3][3] = int(dist(robot2.positionXRobot, robot2.positionYRobot, robot4.positionXRobot-3, robot4.positionYRobot));
 	}
-	if (robot4.cible == 3) //coin supérieur gauche
+	if (robot4.cible == 3) //coin supÃ©rieur gauche
 	{
 		nombreDeplacementsRobot4 = 8;
 		distance[3][0] = int(dist(25, 25, robot4.positionXRobot, robot4.positionYRobot-3));
@@ -1541,7 +1543,7 @@ function positionRobotTableau4()
 		distance[3][2] = int(dist(25, 25, robot4.positionXRobot, robot4.positionYRobot+3));
 		distance[3][3] = int(dist(25, 25, robot4.positionXRobot-3, robot4.positionYRobot));
 	}
-	if (robot4.cible == 4) //coin supérieur droite
+	if (robot4.cible == 4) //coin supÃ©rieur droite
 	{
 		nombreDeplacementsRobot4 = 8;
 		distance[3][0] = int(dist(24*30*multiplicateur, 25, robot4.positionXRobot, robot4.positionYRobot-3));
@@ -1549,7 +1551,7 @@ function positionRobotTableau4()
 		distance[3][2] = int(dist(24*30*multiplicateur, 25, robot4.positionXRobot, robot4.positionYRobot+3));
 		distance[3][3] = int(dist(24*30*multiplicateur, 25, robot4.positionXRobot-3, robot4.positionYRobot));
 	}
-	if (robot4.cible == 5) //coin inférieur gauche
+	if (robot4.cible == 5) //coin infÃ©rieur gauche
 	{
 		nombreDeplacementsRobot4 = 8;
 		distance[3][0] = int(dist(25, 17*30*multiplicateur, robot4.positionXRobot, robot4.positionYRobot-3));
@@ -1557,7 +1559,7 @@ function positionRobotTableau4()
 		distance[3][2] = int(dist(25, 17*30*multiplicateur, robot4.positionXRobot, robot4.positionYRobot+3));
 		distance[3][3] = int(dist(25, 17*30*multiplicateur, robot4.positionXRobot-3, robot4.positionYRobot));
 	}
-	if (robot4.cible == 6) //coin inférieur droite
+	if (robot4.cible == 6) //coin infÃ©rieur droite
 	{
 		nombreDeplacementsRobot4 = 8;
 		distance[3][0] = int(dist(24*30*multiplicateur, 17*30*multiplicateur, robot4.positionXRobot, robot4.positionYRobot-3));
@@ -1604,7 +1606,7 @@ function verificationObstacleAutourRobot4()
 			robot4.caseHautRobot = false;
 		}
 
-		//verification obstacle à droite
+		//verification obstacle Ã  droite
 		if (carte[robot4.positionYRobotTableau+1][robot4.positionXRobotTableau+1+1] == 0)
 		{
 			robot4.caseDroiteRobot = true;
@@ -1627,7 +1629,7 @@ function verificationObstacleAutourRobot4()
 			robot4.caseBasRobot = false;
 		}
 
-		//verification obstacle à gauche
+		//verification obstacle Ã  gauche
 		if (carte[robot4.positionYRobotTableau+1][robot4.positionXRobotTableau-1+1] == 0)
 		{
 			robot4.caseGaucheRobot = true;
@@ -2162,14 +2164,14 @@ function deplacementJoueur()
 		
 		if (x_joueur - multiplicateur > 0)
 		{
-			if (keyIsDown(81)) { //aller à gauche
+			if (keyIsDown(81)) { //aller Ã  gauche
 				x_joueur -= vittesse_joueur;
 			}
 		}
 		
 		if (x_joueur < 750*multiplicateur-15*multiplicateur+25)
 		{
-			if (keyIsDown(68)) { //aller à droite
+			if (keyIsDown(68)) { //aller Ã  droite
 				x_joueur += vittesse_joueur;
 			}
 		}
@@ -2192,14 +2194,14 @@ function deplacementJoueur()
 		
 		if (x_joueur2 - multiplicateur > 0)
 		{
-			if (keyIsDown(37)) { //aller à gauche
+			if (keyIsDown(37)) { //aller Ã  gauche
 				x_joueur2 -= vittesse_joueur;
 			}
 		}
 		
 		if (x_joueur2 < 750*multiplicateur-15*multiplicateur+25)
 		{
-			if (keyIsDown(39)) { //aller à droite
+			if (keyIsDown(39)) { //aller Ã  droite
 				x_joueur2 += vittesse_joueur;
 			}
 		}
@@ -2454,8 +2456,13 @@ function carte_collision(debut)
 }
 function quadrillage(x,y,debut)
 {
-	rect(position_carte + x*30*multiplicateur,position_carte + y*30*multiplicateur,30*multiplicateur,30*multiplicateur);
-	rect(position_carte + (24-x)*30*multiplicateur,position_carte + (17-y)*30*multiplicateur,30*multiplicateur,30*multiplicateur);
+	murHaut.resize(34*multiplicateur,32*multiplicateur);
+	murBas.resize(34*multiplicateur,32*multiplicateur);
+	image(murBas, position_carte + x*30*multiplicateur,position_carte + y*30*multiplicateur);
+	image(murBas,position_carte + (24-x)*30*multiplicateur,position_carte + (17-y)*30*multiplicateur);
+	image(murHaut, position_carte + x*30*multiplicateur,position_carte + y*30*multiplicateur - 20*multiplicateur);
+	image(murHaut,position_carte + (24-x)*30*multiplicateur,position_carte + (17-y)*30*multiplicateur - 20*multiplicateur);
+	
 	if(debut == true){
 		if (initialisationCarteAZero == true)
 		{
