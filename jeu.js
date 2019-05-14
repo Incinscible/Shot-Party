@@ -1,11 +1,11 @@
 var comptage = 0; //variable qui indique la position de l'obstacle dans le tableau 'coordonnes_obstacle' lors du premier démarrage
 
-const multiplicateur = 2; //redimensionnement des objets en fonction de la taille de l'écran
-
-var xapparitionjoueur = [2*30*multiplicateur, 30*26*multiplicateur];
-var yapparitionjoueur = [30*multiplicateur, 30*18*multiplicateur];
+const multiplicateur = 1; //redimensionnement des objets en fonction de la taille de l'écran
 
 var position_carte = 25; // position X et Y du coin supérieur gauche de la carte
+
+var xapparitionjoueur = [2*30*multiplicateur, position_carte + (24*30+0.75)*multiplicateur];
+var yapparitionjoueur = [30*multiplicateur, position_carte + (17*30+0.75)*multiplicateur];
 
 var x_joueur = position_carte + multiplicateur; //coordonnées des 2 joueurs
 var y_joueur = position_carte + multiplicateur;
@@ -238,56 +238,60 @@ function draw() {
 
 function tirRobot1Faux()
 {
-	if (tirRobotTest)
-	{
-		for (var i=0; i<3; i++)
-		{
-			positionBalleRobot[0][i] = robot1.positionXRobot;
-			positionBalleRobot[1][i] = robot1.positionYRobot;
-		}
-		
-		
-		angleRobot[0][0] = (Math.atan2(y_joueur2-robot1.positionYRobot,x_joueur2-robot1.positionXRobot));
-		angleRobot[0][1] = (Math.atan2(robot3.positionYRobot-robot1.positionYRobot,robot3.positionXRobot-robot1.positionXRobot)); 
-		angleRobot[0][2] = (Math.atan2(robot4.positionYRobot-robot1.positionYRobot,robot4.positionXRobot-robot1.positionXRobot));
-		
-		
-		tirRobotTest = false;
-		
-		
-	}
-	
-	if (timerTirRobot1>60)
-	{
-		tirRobotTest = true;
-		timerTirRobot1 = 0;
-	}
-	
-	timerTirRobot1+=1;
-	
-	
+	robot1.timerTirCible+=1;
+	robot1.timerTirCible2+=1;
+	robot1.timerTirCible3+=1;
 	
 	if (robot1.joueur2estTouche == false)
 	{
-		ellipse(positionBalleRobot[0][0]+15*multiplicateur,positionBalleRobot[1][0]+15*multiplicateur,0,0);
-		positionBalleRobot[0][0] += multiplicateur*4*cos(angleRobot[0][0]);
-		positionBalleRobot[1][0] += multiplicateur*4*sin(angleRobot[0][0]);
+		if (robot1.timerTirCible < 60)
+		{
+			ellipse(positionBalleRobot[0][0]+15*multiplicateur,positionBalleRobot[1][0]+15*multiplicateur,0,0);
+			positionBalleRobot[0][0] += multiplicateur*4*cos(angleRobot[0][0]);
+			positionBalleRobot[1][0] += multiplicateur*4*sin(angleRobot[0][0]);
+			
+			distanceMissilesRobotsEquipe1[0][0]=dist(x_joueur2+10*multiplicateur,y_joueur2+15*multiplicateur,positionBalleRobot[0][0]+15*multiplicateur,positionBalleRobot[1][0]+15*multiplicateur); //distance entre le missile du joueur 2 et la position du joueur 1
+			
+			if (distanceMissilesRobotsEquipe1[0][0] <= 30*multiplicateur)
+			{
+				robot1.joueur2estTouche = true;
+				positionBalleRobot[0][0] = 12345;
+				robot1.timerTirCible = 0;
+			}
+		}
+		else
+		{
+			angleRobot[0][0] = (Math.atan2(y_joueur2-robot1.positionYRobot,x_joueur2-robot1.positionXRobot));
+			positionBalleRobot[0][0] = robot1.positionXRobot;
+			positionBalleRobot[1][0] = robot1.positionYRobot;
+			robot1.timerTirCible = 0;
+
+		}
+	}
+	else
+	{
+		if (robot1.timerTirCible < 60)
+		{
+			ellipse(positionBalleRobot[0][0]+15*multiplicateur,positionBalleRobot[1][0]+15*multiplicateur,2.5*multiplicateur,2.5*multiplicateur);
+			positionBalleRobot[0][0] += multiplicateur*4*cos(angleRobot[0][0]);
+			positionBalleRobot[1][0] += multiplicateur*4*sin(angleRobot[0][0]);
+			
+		}
+		else
+		{
+			angleRobot[0][0] = (Math.atan2(y_joueur2-robot1.positionYRobot,x_joueur2-robot1.positionXRobot));
+			positionBalleRobot[0][0] = robot1.positionXRobot;
+			positionBalleRobot[1][0] = robot1.positionYRobot;
+			robot1.timerTirCible = 0;
+			robot1.joueur2estTouche = false;
+			
+
+		}
 	}
 	
-	if (robot1.robot3estTouche == false)
-	{
-		ellipse(positionBalleRobot[0][1]+15*multiplicateur,positionBalleRobot[1][1]+15*multiplicateur,0,0);
-		positionBalleRobot[0][1] += multiplicateur*4*cos(angleRobot[0][1]);
-		positionBalleRobot[1][1] += multiplicateur*4*sin(angleRobot[0][1]);
-	}
-		
-	if (robot1.robot4estTouche == false)
-	{
-		ellipse(positionBalleRobot[0][2]+15*multiplicateur,positionBalleRobot[1][2]+15*multiplicateur,0,0);
-		positionBalleRobot[0][2] += multiplicateur*4*cos(angleRobot[0][2]);
-		positionBalleRobot[1][2] += multiplicateur*4*sin(angleRobot[0][2]);
-	}
 	
+	
+	//COLLISION OBSTACLES
 	for (var l=0; l<3; l++)
 	{
 		for (var k = 0; k < comptage; k++)  //collision par droite, gauche, haut, bas
@@ -301,7 +305,6 @@ function tirRobot1Faux()
 		}
 	}
 	
-	detectionFausseCollisionProjectileEntreRobots();
 			
 }
 
@@ -341,65 +344,11 @@ function detectionFausseCollisionProjectileEntreRobots()
 	
 }
 
+
 function tirRobot1()
 {
-	if (robot1.joueur2estTouche)
-	{
-		if (robot1.timerTirCible < 60)
-		{
-			ellipse(positionBalleRobot[0][0]+15*multiplicateur,positionBalleRobot[1][0]+15*multiplicateur,2.5*multiplicateur,2.5*multiplicateur);
-			positionBalleRobot[0][0] += multiplicateur*4*cos(angleRobot[0][0]);
-			positionBalleRobot[1][0] += multiplicateur*4*sin(angleRobot[0][0]);
-			robot1.timerTirCible+=1;
-		}
-		else
-		{
-			robot1.joueur2estTouche = false;
-			positionBalleRobot[0][0] = robot1.positionXRobot;
-			positionBalleRobot[1][0] = robot1.positionYRobot;
-			robot1.timerTirCible = 0;
-		}
-		
-	}
-	
-	if (robot1.robot3estTouche)
-	{
-		if (robot1.timerTirCible2 < 60)
-		{
-			ellipse(positionBalleRobot[0][1]+15*multiplicateur,positionBalleRobot[1][1]+15*multiplicateur,2.5*multiplicateur,2.5*multiplicateur);
-			positionBalleRobot[0][1] += multiplicateur*4*cos(angleRobot[0][1]);
-			positionBalleRobot[1][1] += multiplicateur*4*sin(angleRobot[0][1]);
-			robot1.timerTirCible2+=1;
-		}
-		else
-		{
-			robot1.robot3estTouche = false;
-			positionBalleRobot[0][1] = robot1.positionXRobot;
-			positionBalleRobot[1][1] = robot1.positionYRobot;
-			robot1.timerTirCible2 = 0;
-		}
-		
-	}
-	
-	if (robot1.robot4estTouche)
-	{
-		if (robot1.timerTirCible3 < 60)
-		{
-			ellipse(positionBalleRobot[0][2]+15*multiplicateur,positionBalleRobot[1][2]+15*multiplicateur,2.5*multiplicateur,2.5*multiplicateur);
-			positionBalleRobot[0][2] += multiplicateur*4*cos(angleRobot[0][2]);
-			positionBalleRobot[1][2] += multiplicateur*4*sin(angleRobot[0][2]);
-			robot1.timerTirCible3+=1;
-		}
-		else
-		{
-			robot1.robot4estTouche = false;
-			positionBalleRobot[0][2] = robot1.positionXRobot;
-			positionBalleRobot[1][2] = robot1.positionYRobot;
-			robot1.timerTirCible3 = 0;
-		}
-		
-	}
 }
+
 
 // ROBOT NUMERO 1
 
