@@ -332,7 +332,7 @@ function afficherRobot(robot) { //Affiche un robot en utilisant les coordonnées
 		if (robot.equipe == 1) {
 			fill(0,0,255);
 		} else {
-			fill(255,0,0);ssss
+			fill(255,0,0);
 		}
 		ellipse(robot.positionBalle[0]+15*multiplicateur,robot.positionBalle[1]+15*multiplicateur,2.5*multiplicateur,2.5*multiplicateur);
 	}
