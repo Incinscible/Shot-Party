@@ -1,0 +1,54 @@
+/* ce fichier est un fichier "CSS"
+dans ce fichier on définit l'apparence de chaque boite du fichier HTML  */
+
+#boite_contenant_tout
+{
+ 
+  background-color: #87CEEB;
+  
+}
+
+#decor_Fond
+{
+  position: fixed;
+  top:0%;
+  
+  width: 100%;
+  height: 300%;
+  
+  background-color: #BF351F;
+  
+  /* les 2 lignes suivantes permettent de placer une image de fond dans la boite "décor fond" */
+  
+  background-image:url(formule1.jpg);
+  background-repeat:no-repeat;
+  
+     
+}
+
+
+#boite1 {
+ 
+  position: absolute;  /*la position peut être par exemple définie en "absolute" ou "fixed" */
+  background-color: #FFFFFF;
+  
+  top:70%;
+  left:35%;
+  
+  width: 30%;
+  height: 20%;
+  
+  border-radius: 1.5em;
+  
+  text-align:center;
+  
+   font-size: 2em; /* "font" en anglais veut dire "police de caractère" */ /* les valeurs peuvent être saisies  en pixels "px" ,en "em"... */
+    
+/*   les 3 lignes suivantes permtettent d'aligner le contenu de la boite verticalement */
+  display: flex; 
+  flex-direction: column; /* direction d'affichage verticale */
+  justify-content: center; /* alignement vertical */
+  
+}
+
+
